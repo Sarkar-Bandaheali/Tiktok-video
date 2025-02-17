@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TikTok Video Downloader</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+      background-color: #121212;
+      color: white;
+    }
+    input[type="text"] {
+      width: 80%;
+      max-width: 400px;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #444;
+      background: #222;
+      color: white;
+    }
+    button {
+      padding: 12px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+    .video-details {
+      margin-top: 20px;
+      padding: 15px;
+      background: #1e1e1e;
+      border-radius: 8px;
+      display: inline-block;
+    }
+    .download-btn {
+      display: inline-block;
+      margin: 10px;
+      padding: 12px 20px;
+      background-color: #28a745;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    .download-btn:hover {
+      background-color: #218838;
+    }
+    .error {
+      color: red;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>TikTok Video Downloader</h1>
+  <form action="/download" method="POST">
+    <input type="text" name="videoUrl" placeholder="Enter TikTok Video Link" required>
+    <button type="submit">Download</button>
+  </form>
+
+  <% if (video) { %>
+    <div class="video-details">
+      <h2><%= video.desc %></h2>
+      <img src="<%= video.author.avatar %>" alt="Author Avatar" style="max-width: 100px; border-radius: 50%;">
+      <p><strong>Creator:</strong> <%= video.author.nickname %></p>
+      <p><strong>Likes:</strong> <%= video.statistics.likeCount %></p>
+      <p><strong>Comments:</strong> <%= video.statistics.commentCount %></p>
+      <p><strong>Shares:</strong> <%= video.statistics.shareCount %></p>
+      <br>
+      <a href="/force-download?url=<%= encodeURIComponent(video.video) %>" 
+         class="download-btn">
+        Download TikTok Video
+      </a>
+    </div>
+  <% } %>
+
+  <% if (error) { %>
+    <p class="error"><%= error %></p>
+  <% } %>
+</body>
+</html>
